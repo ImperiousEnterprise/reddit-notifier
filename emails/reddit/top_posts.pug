@@ -1,0 +1,49 @@
+doctype html
+html
+    link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+    style(type='text/css').
+        .orange_circle {
+            border-radius: 50%;
+            width: 100px;
+            height: 56px;
+            padding: 10px;
+            background: orange;
+            border: 2px solid #666;
+            color: white;
+            text-align: center;
+            font: 32px Arial, sans-serif;
+        }
+        .title{
+            font-size: 22px;
+        }
+        .img_height{
+            height: 500px;
+        }
+        .subreddit_font{
+            font-size: 32px;
+        }
+    body
+        .container
+            .row.justify-content-center
+                .col-12.align-self-center
+                    h1.display-1 Reddit NewsLetter
+        .container
+            p.h3 Hello #{ user.username_displayed } ,
+            p.h3 See yesterdays top voted posts from your favorite subreddits
+        each sub in user.subreddits
+            .container-fluid.pb-2
+                .container.border.border-dark
+                    .row.justify-content-center
+                        h1.subreddit_font #{sub.name} : https://www.reddit.com/r/#{sub.name}/top
+                each post in sub.topPosts
+                    .container
+                        if post.picture !== 'default'
+                            img.img-fluid.img_height.mx-auto.d-block(src=post.picture)
+                        else
+                            img.img-fluid.img_height.mx-auto.d-block(src='https://babalyon-2020-test.s3.amazonaws.com/smaller.jpg')
+                    .container
+                        .row
+                            .col-2
+                                p.orange_circle #{ post.upvotes + "k"}
+                            .col-10.align-self-center
+                                p.title #{ post.title }
